@@ -82,7 +82,7 @@ Finally, the slurm scripts used for the grid search are included in /slurm and =
 
 
 
-Feel free to contact me if you would like to have any additional content/information/code  :sunglasses:
+Feel free to contact me if you would like to have any additional content/information/code.  :sunglasses:
 
 
 
