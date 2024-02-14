@@ -1,0 +1,5 @@
+,model.weight_decay,model.optimizer_lr,data.batch_size,corr_input,model.model_type,model.corr_regularization,regression_head
+0,0.01,0.001,256,False,transformer,True,True
+1,0.01,0.0001,256,True,transformer,False,True
+2,0.01,0.0001,256,True,transformer,True,True
+3,0,0.001,256,False,transformer,False,False

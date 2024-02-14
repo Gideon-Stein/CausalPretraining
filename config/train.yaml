@@ -1,0 +1,64 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+defaults:
+  - _self_
+  - data: base.yaml
+  - model: small.yaml
+  - hparams_search: null
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+  
+hydra:
+  job:
+    chdir: True # necessary hack
+  #output_subdir: null
+  run:
+    dir: res/${now:%d-%m-%H-%S-%f}
+
+paths:
+  log_dir: run
+  checkpoint_dir: ${paths.log_dir} 
+
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: ${paths.checkpoint_dir} # can be done with more stuff
+  max_epochs: 1000
+  accelerator: auto #auto
+  devices: auto
+  precision: "16-mixed" # mixed precision for extra speed-up
+  check_val_every_n_epoch: 2
+  deterministic: True
+  enable_checkpointing: True # TODO enable in the actual experiment then!
+  log_every_n_steps: 313
+  #overfit_batches: 1
+
+
+n_vars: 3
+max_lags: 2
+  
+regression_head: False
+corr_input: False
+distinguish_mode: False
+
+early_stopping: 
+  patience: 40   # I guess that is already quite a bit?
+  min_delta: 0
+
+
+extras:
+  ignore_warnings: False
+  pretty_errors: True
+
+
+tensorboard:
+  _target_: lightning.pytorch.loggers.tensorboard.TensorBoardLogger
+  save_dir: "${paths.checkpoint_dir}/"
+  name: "null"
+  log_graph: False
+  default_hp_metric: True
+  prefix: ""
+  version: null
+
+seed: 42

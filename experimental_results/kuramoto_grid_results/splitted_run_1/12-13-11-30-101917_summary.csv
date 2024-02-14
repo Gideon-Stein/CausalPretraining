@@ -1,0 +1,15 @@
+HP,17,5,12,23,1,21,13,8,18,19,22,10,14,9,3,6,16,7,4,15,11,2,0,20
+model.optimizer_lr,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.0001,0.0001,0.001,0.0001,0.0001,0.0001,0.0001,0.0001,0.001,0.001,0.0001,0.0001,0.0001,0.0001,0.0001
+data.batch_size,256,16,64,16,256,16,64,16,64,16,256,256,256,64,256,256,16,64,256,64,16,64,16,64
+model.weight_decay,0.01,0,0.01,0.01,0.01,0.01,0.01,0,0,0.01,0.01,0,0,0,0.01,0,0.01,0,0,0.01,0,0.01,0,0
+model.model_type,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp,mlp
+model.corr_regularization,False,False,True,False,True,True,False,True,True,False,True,False,False,True,False,True,True,False,True,True,True,False,False,False
+corr_input,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True
+regression_head,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False
+hparams_search,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml,kuramoto.yaml
+data.ds_name,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto,kuramoto
+max_lags,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+n_vars,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+model,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml,medium.yaml
+Val_Auroc,0.8188932,0.8297974,0.8741616,0.8520839,0.8308972,0.86320627,0.85866684,0.85345703,0.8641459,0.81841207,0.8049953,0.8204342,0.79904264,0.81123984,0.7999594,0.8046415,0.81363654,0.85178334,0.8186738,0.8124239,0.8180541,0.8098655,0.81760156,0.8104383
+Val_MSE,0.16777256,0.1621974,0.15351163,0.15149066,0.17701803,0.16074803,0.14918703,0.16677386,0.15962662,0.16747169,0.1896769,0.16702531,0.17706111,0.18729469,0.17660445,0.18978265,0.18720162,0.15206513,0.18342365,0.18660153,0.18438879,0.17228365,0.16776444,0.17243941

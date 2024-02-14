@@ -1,0 +1,87 @@
+_target_: model.model_wrapper.Architecture_PL
+
+model_type: bidirectional
+
+# TODO Not finished
+
+# Dimensions lead to similar amounts of parameters.
+
+# transformer specifics
+d_model: 1024
+n_heads: 12
+num_encoder_layers: 16
+d_ff: 8192
+dropout: 0.05
+distil: True
+trans_max_ts_length: 600 # used by transformer embedding
+
+
+# gru specifics bidirectional
+gruB_hidden_size1: 768
+gruB_hidden_size2: 1024
+gruB_hidden_size3: 1024
+gruB_num_layers: 2
+
+#unidirectional
+gruU_hidden_size1: 768
+gruU_hidden_size2: 768
+gruU_hidden_size3: 768
+gruU_num_layers: 5
+
+# convMixer specifics
+convM_dim: 4096
+convM_depth: 16
+#kernel_size: 12 I derive this from the max_lags
+#patch_size: 12
+convM_hidden_size1: 4096
+conv1D: True
+
+# mlp specifics
+mlp_max_ts_length: 512 # maximum ts length that is considered
+mlp_hidden_size1: 1024
+mlp_hidden_size2: 2048
+mlp_hidden_size3: 2048
+mlp_hidden_size4: 1024
+
+
+
+
+# dimensions
+n_vars: ${n_vars}
+max_lags: ${max_lags}
+
+
+# extra functionality
+regression_head: ${regression_head}
+soft_adapt: False
+corr_input: ${corr_input}
+link_thresholds: [0.25,0.5,0.75]
+corr_regularization: False
+
+
+#optimizer optimizer: # I am HP optimizing over this
+optimizer_lr: 0.0001
+#eps: 1e-08
+weight_decay: 0.01
+#betas: [0.9,0.999]
+#scheduler_factor: 0.1
+#lr schedule
+#lr_schedule_milestones: [9999]
+#lr_schedule_gamma: 0.5
+
+#loss 
+loss_type: "bce"
+
+# Metrics
+val_metric:  "ME"
+
+distinguish_mode: ${distinguish_mode}
+full_representation_mode: False
+
+
+
+
+
+
+
+

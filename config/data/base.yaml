@@ -1,0 +1,22 @@
+_target_: data.generator.GeneratorDataModule
+ds_path: /home/stein_test/Causal_pretraining/data/deterministic_ds
+ds_name: base
+train_ds_name: ${data.ds_path}/${data.ds_name}/simple_train.p
+test_ds_name: ${data.ds_path}/${data.ds_name}/simple_test.p
+val_ds_name: ${data.ds_path}/${data.ds_name}/simple_val.p
+deterministic_ds: True
+batch_size: 64
+n_vars:  ${n_vars}
+max_lags: ${max_lags}
+binary: True
+regression: ${regression_head}
+corr_input: ${corr_input}
+# only relevant for on the fly data generation
+epoch_size: 5000
+link_threshold: 0.85
+param_range: [0.3,0.5]
+restrict_links: True
+noise_var: 0.4
+time_series_n: 500
+functional_class: "linear"
+distinguish_mode: ${distinguish_mode}

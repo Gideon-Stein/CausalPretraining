@@ -1,0 +1,2 @@
+,model.weight_decay,model.optimizer_lr,data.batch_size,corr_input,model.model_type,model.corr_regularization,regression_head
+0,0,0.001,256,True,transformer,False,False
