@@ -194,6 +194,9 @@ def main():
         )
         from tigramite.independence_tests.parcorr_wls import  ParCorr
 
+        roc = torchmetrics.classification.BinaryROC()
+        auroc = torchmetrics.classification.BinaryAUROC()
+
         if args.synth:
             print("Calc PCMCI Synthetic")
 
@@ -203,8 +206,6 @@ def main():
                 "scores/pcmci_test_scale_up_auroc.p",
             ]
 
-            roc = torchmetrics.classification.BinaryROC()
-            auroc = torchmetrics.classification.BinaryAUROC()
 
             for n, exp in enumerate(
                 [
@@ -248,7 +249,7 @@ def main():
             pickle.dump(result, open("scores/river_pcmci_test_auroc.p", "wb"))
             result
 
-            # Aerosol:  (cut the ts at 50 to make this somehow runnable.)
+            # Aerosol:  (cut the ts at 100 to make this somehow runnable.)
             data = pickle.load(open("data/deterministic_ds/aerosol/simple_test.p", "rb"))
             res = pcmci_calc_aerosol([data[0][:,:100,:], data[1][:,:100,:]])
             print(res)
