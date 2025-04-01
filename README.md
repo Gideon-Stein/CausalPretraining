@@ -4,7 +4,7 @@
 
 <img src="visualization.png" alt="image" width="50%" height="auto">
 
-This repository holds the official results for: arXiv
+This repository holds the official code for: [Embracing the black box: Heading towards foundation models for causal discovery from time series data](https://arxiv.org/abs/2402.09305) 
 
 
 
