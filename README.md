@@ -34,7 +34,8 @@ The project is loosely build upon (https://github.com/ashleve/lightning-hydra-te
 To generate synthetic data samples run 
 
 ```
-generate_synthetic_ds.py --scale_up --synthetic_six --joint
+cd data
+python generate_synthetic_ds.py --scale_up --synthetic_six --joint
 ```
 
 To prepare other data sources used in the paper, first download them here: 
