@@ -14,6 +14,7 @@ def train(cfg: DictConfig) -> tuple[dict, dict]:
 
     
     data_module: LightningDataModule = hydra.utils.instantiate(cfg.data)
+    
     model: LightningModule = hydra.utils.instantiate(cfg.model)
 
     logger: TensorBoardLogger = hydra.utils.instantiate(cfg.tensorboard)

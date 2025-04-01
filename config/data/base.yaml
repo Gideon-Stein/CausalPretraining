@@ -1,5 +1,5 @@
 _target_: data.generator.GeneratorDataModule
-ds_path: /home/stein_test/Causal_pretraining/data/deterministic_ds
+ds_path: /home/stein/project_resources/CausalPretraining/data/deterministic_ds
 ds_name: base
 train_ds_name: ${data.ds_path}/${data.ds_name}/simple_train.p
 test_ds_name: ${data.ds_path}/${data.ds_name}/simple_test.p

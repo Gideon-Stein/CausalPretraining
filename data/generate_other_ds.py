@@ -18,7 +18,7 @@ def main():
     )
 
     parser.add_argument("--aerosol", action="store_true")
-    parser.add_argument("--aerosol_path", default="data_raw/four_outputs_liqcf_pacific.csv")
+    parser.add_argument("--aerosol_path", default="four_outputs_liqcf_pacific.csv")
 
     args = parser.parse_args()
 
@@ -59,6 +59,7 @@ def main():
 
         # aerosol
         data = pd.read_csv(args.aerosol_path, index_col=0)
+        print(data)
         # some formatting
         data["key"] = data["lats"].astype(str) + "_" + data["lons"].astype(str)
         data.drop(columns=["lats", "lons"], inplace=True)

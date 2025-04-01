@@ -1,5 +1,4 @@
 import torch
-import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
@@ -17,8 +16,6 @@ sys.path.append("..")
 import einops
 from statsmodels.tsa.api import VAR
 import pickle
-from tigramite.pcmci import PCMCI
-from pathlib import Path
 
 
 from functools import wraps
@@ -555,19 +552,19 @@ def roc_curve(out, lab, roc, auroc):
 def load_river_data():
     # load the files
     a = pd.read_csv(
-        "data/data_raw/river_discharge_data/data_dillingen.csv",
+        "data/data_dillingen.csv",
         on_bad_lines="skip",
         skiprows=10,
         sep=";",
-    )  # donau
+    )  # donaupip 
     b = pd.read_csv(
-        "data/data_raw/river_discharge_data/data_kempten.csv",
+        "data/data_kempten.csv",
         on_bad_lines="skip",
         skiprows=10,
         sep=";",
     )  # iller
     c = pd.read_csv(
-        "data/data_raw/river_discharge_data/data_lenggries.csv",
+        "data/data_lenggries.csv",
         on_bad_lines="skip",
         skiprows=10,
         sep=";",

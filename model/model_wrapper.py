@@ -9,7 +9,6 @@ from model.conv import conv_mixer
 from model.mlp import mlp
 from model.informer import transformer
 from helpers.tools import binary_metrics, custom_corr_regularization, weighted_mse
-from softadapt import LossWeightedSoftAdapt
 
 
 class Architecture_PL(pl.LightningModule):
@@ -258,7 +257,7 @@ class Architecture_PL(pl.LightningModule):
             )
         self.log(
             "tr_class_loss",
-            class_loss.type("torch.DoubleTensor"),
+            class_loss,
             sync_dist=True,
             prog_bar=True,
         )

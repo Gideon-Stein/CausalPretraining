@@ -438,6 +438,8 @@ class deterministic_ds(Dataset):
                 return torch.load(path)
             else:
                 return pickle.load(open(path, "rb"))
+        else: 
+            raise FileNotFoundError(path)
 
 
 def load_deterministic_ds(
