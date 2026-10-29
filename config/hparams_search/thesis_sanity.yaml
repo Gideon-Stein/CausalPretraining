@@ -1,0 +1,25 @@
+# @package _global_
+# Thesis Ch. 7.1 sanity checks: every architecture x 5 seeds x with/without correlation injection.
+# Used together with +experiment=thesis_sanity_<task>, see config/experiment/.
+
+defaults:
+  - override /hydra/launcher: submitit_slurm
+  - override /hydra/sweeper: optuna
+  - override /hydra/sweeper/sampler: grid
+
+hydra:
+  launcher:
+    cpus_per_task: 2
+    gpus_per_task: null
+    timeout_min: 6969
+    mem_gb: 4
+    name: cp_sanity
+  mode: "MULTIRUN"
+  sweeper:
+    _target_: hydra_plugins.hydra_optuna_sweeper.optuna_sweeper.OptunaSweeper
+    n_jobs: 50
+    n_trials: 50
+    params:
+      model.model_type: choice("mlp", "unidirectional", "bidirectional", "convM", "transformer")
+      seed: choice(42, 43, 44, 45, 46)
+      corr_input: choice(True, False)

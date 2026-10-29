@@ -8,6 +8,9 @@ store_root: /home/datasets4/stein/cp_v1_data
 # NOTE: data/generate_synthetic_ds.py is unseeded, regenerating does NOT reproduce these.
 data_root: /home/datasets4/stein/cp_v1_data/data/deterministic_ds
 
+# Datasets derived for the thesis (e.g. the shuffled-label control), written by thesis scripts.
+derived_root: /home/datasets4/stein/cp_v1_data/derived
+
 # Raw real-world data (rivers, aerosols), only needed by data/generate_other_ds.py.
 raw_root: /home/datasets4/stein/cp_v1_data/data
 

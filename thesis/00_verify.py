@@ -151,7 +151,7 @@ def check_rescore(k, seed=0):
                     continue
                 path = test_set_path(row["data.ds_name"], ts)
                 draws = [auroc(*predict(model, path, binary=binary, legacy=True,
-                                        batch_size=legacy_batch_size(ts), seed=s))
+                                        batch_size=legacy_batch_size(ts, entry.get("legacy_bs")), seed=s))
                          for s in range(LEGACY_DRAWS)]
                 score_eval = auroc(*predict(model, path, binary=binary))
                 good = min(draws) - TOL <= row[col] <= max(draws) + TOL

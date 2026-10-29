@@ -10,6 +10,7 @@ import pandas as pd
 import torch
 import torchmetrics
 import yaml
+from omegaconf import OmegaConf
 from torch.utils.data import DataLoader
 
 REPO = Path(__file__).resolve().parent.parent
@@ -106,7 +107,9 @@ def load_results(csv):
 # ---------------------------------------------------------------------------
 
 def run_config(run_dir):
-    return yaml.safe_load(open(Path(run_dir) / ".hydra" / "config.yaml"))
+    """The run's composed hydra config with interpolations resolved, as plain dicts."""
+    cfg = OmegaConf.load(Path(run_dir) / ".hydra" / "config.yaml")
+    return OmegaConf.to_container(cfg, resolve=True)
 
 
 def best_checkpoint(run_dir):
@@ -119,10 +122,11 @@ def load_model(ckpt):
     return Architecture_PL.load_from_checkpoint(ckpt, map_location="cpu").eval()
 
 
-def legacy_batch_size(test_set):
+def legacy_batch_size(test_set, overrides=None):
     """Batch size the original scoring used: 500 for Test-Set 1 (via load_deterministic_ds),
-    50 for Test-Set 2 (via the run's data module with batch_size overridden to 50)."""
-    return 500 if test_set == 1 else 50
+    50 for Test-Set 2 (via the run's data module with batch_size overridden to 50).
+    Some CSVs were scored with other sizes; manifest/runs.yaml records them as legacy_bs."""
+    return (overrides or {}).get(test_set, 500 if test_set == 1 else 50)
 
 
 @torch.no_grad()

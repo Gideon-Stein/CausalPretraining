@@ -1,0 +1,35 @@
+# @package _global_
+# Thesis Ch. 7.1 sanity check: shuffled-label control on SL (train/val labels permuted across samples)
+# Setup of the original preliminary studies (results/set_1, Jul 2023): small models,
+# batch 64, lr 1e-4, wd 0.01, 500 epochs without early stopping.
+# Launch:  python train.py +experiment=thesis_sanity_shuffled hparams_search=thesis_sanity
+
+defaults:
+  - override /model: small.yaml
+
+n_vars: 3
+max_lags: 2
+regression_head: False
+distinguish_mode: False
+
+data:
+  ds_path: /home/datasets4/stein/cp_v1_data/derived  # = thesis/paths.yaml:derived_root
+  ds_name: base_shuffled
+  batch_size: 64
+  binary: True
+
+model:
+  optimizer_lr: 0.0001
+  weight_decay: 0.01
+  corr_regularization: False
+  loss_type: bce
+
+trainer:
+  max_epochs: 500
+
+early_stopping:
+  patience: 500
+
+hydra:
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/sanity_shuffled/${now:%Y-%m-%d_%H-%M-%S}

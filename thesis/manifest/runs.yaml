@@ -2,6 +2,8 @@
 # result CSV (relative to experimental_results/), and where it is used in the thesis.
 # `00_verify.py --runs` checks that every CSV run has exactly one matching run folder,
 # `--rescore` re-scores a sample of them from their checkpoints.
+# legacy_bs: batch size per thesis test set that the original (train-mode) scoring used for
+# that CSV; it differs between scoring sessions (default {1: 500, 2: 50}).
 
 std:
   single:
@@ -11,6 +13,7 @@ std:
   joint_medium:
     csv: synthetic_data_1_joint_grid_results/std/summary_medium.csv
     runs: [experiment_2_std_medium]
+    legacy_bs: {1: 500, 2: 500}
     thesis: tab:cp:synthetic-1 (Joint, medium)
   joint_big:
     csv: synthetic_data_1_joint_grid_results/std/summary_big.csv
@@ -31,6 +34,7 @@ std:
   kuramoto:
     csv: kuramoto_grid_results/std/summary.csv
     runs: [experiment_4_std_kuramoto]
+    legacy_bs: {1: 500, 2: 500}
     thesis: tab:cp:kuramoto
 
 grid:
