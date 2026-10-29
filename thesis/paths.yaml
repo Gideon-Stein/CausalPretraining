@@ -1,0 +1,21 @@
+# Locations of everything that is too large for git.
+# All thesis scripts resolve data, runs and baseline scores through this file.
+
+# Read-only store holding data/ and baseline_scores/ (checksums: manifest/*.md5).
+store_root: /home/datasets4/stein/cp_v1_data
+
+# Original CP v1 datasets (the exact sets the thesis runs trained on; read-only copy).
+# NOTE: data/generate_synthetic_ds.py is unseeded, regenerating does NOT reproduce these.
+data_root: /home/datasets4/stein/cp_v1_data/data/deterministic_ds
+
+# Raw real-world data (rivers, aerosols), only needed by data/generate_other_ds.py.
+raw_root: /home/datasets4/stein/cp_v1_data/data
+
+# Correlation/VAR/PCMCI baseline scores computed for the paper.
+baseline_scores: /home/datasets4/stein/cp_v1_data/baseline_scores
+
+# Hydra multiruns of all thesis/paper experiments, including checkpoints.
+runs_root: /home/datasets4/stein/cp_training_runs/cp_1
+
+# New runs started from this branch (sanity checks etc.) are written here.
+new_runs_root: /home/datasets4/stein/cp_training_runs/cp_1_thesis

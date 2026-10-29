@@ -1,0 +1,56 @@
+# Which cp_1 multirun folder (relative to paths.yaml:runs_root) produced which committed
+# result CSV (relative to experimental_results/), and where it is used in the thesis.
+# `00_verify.py --runs` checks that every CSV run has exactly one matching run folder,
+# `--rescore` re-scores a sample of them from their checkpoints.
+
+std:
+  single:
+    csv: synthetic_data_1_grid_results/std/summary.csv
+    runs: [experiment_1_std]
+    thesis: tab:cp:synthetic-1 (Single)
+  joint_medium:
+    csv: synthetic_data_1_joint_grid_results/std/summary_medium.csv
+    runs: [experiment_2_std_medium]
+    thesis: tab:cp:synthetic-1 (Joint, medium)
+  joint_big:
+    csv: synthetic_data_1_joint_grid_results/std/summary_big.csv
+    runs: [experiment_2_std_big]
+    thesis: tab:cp:synthetic-1 (Joint, big)
+  scaling:
+    csv: synthetic_data_2_grid_results/std/summary_big.csv
+    runs: [experiment_3_scale_up_std]
+    thesis: fig:cp:scaling (sizes small/medium/big)
+  scaling_deep:
+    csv: synthetic_data_2_grid_results/std/summary_deep.csv
+    runs: [experiment_3_scale_up_deep_std]
+    thesis: fig:cp:scaling (sizes deep/LCM)
+  scaling_lcm:
+    csv: synthetic_data_2_grid_results/std/summary_lcm.csv
+    runs: [experiment_3_scale_up_deep_std]
+    thesis: fig:cp:scaling (LCM Trf)
+  kuramoto:
+    csv: kuramoto_grid_results/std/summary.csv
+    runs: [experiment_4_std_kuramoto]
+    thesis: tab:cp:kuramoto
+
+grid:
+  single_run_1:
+    csv: synthetic_data_1_grid_results/run_1
+    runs: [experiment_1_grid_search]
+    thesis: helper ablation, seed-instability
+  single_run_2:
+    csv: synthetic_data_1_grid_results/run_2
+    runs: [experiment_1_grid_search_2]
+    thesis: helper ablation, seed-instability
+  joint:
+    csv: synthetic_data_1_joint_grid_results/splitted_run_1
+    runs: [experiment_2_grid_search_medium, experiment_2_grid_search_big]
+    thesis: helper ablation
+  scaling:
+    csv: synthetic_data_2_grid_results/splitted_run_2
+    runs: [experiment_3_scale_up, experiment_3_scale_up_deep]
+    thesis: config selection for scaling reruns
+  kuramoto:
+    csv: kuramoto_grid_results/splitted_run_1
+    runs: [experiment_4_grid_kuramoto]
+    thesis: config selection for Kuramoto reruns
