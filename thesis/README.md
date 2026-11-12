@@ -159,6 +159,34 @@ the runs go to `new_runs_root/cm_fixed/<experiment>/`, the old CM runs stay wher
 | Scaling reruns (11 cells x 5 seeds) | after the grid | `cm_fixed/scaling_std/` | open; then `30_scaling.py` |
 | Kuramoto reruns (2 sizes x 10 seeds) | see header of `hparams_search/thesis_cm_kuramoto_std.yaml` | `cm_fixed/kuramoto_std/` | after the grid; then `rescore.py --mode eval --only kuramoto_cm_fixed` and `40_kuramoto.py` |
 
+## TODO: retrain with |r| correlation injection (v1 update)
+
+Diagnosis (2026-11-11/12): the models get the signed `lagged_batch_corr`, while CT uses |r|. On the
+random-sign datasets (ML, MNL, XLNL, all scaling sets) the networks have to learn an even function of r
+per entry, which Single models mostly fail at (slow, seed-dependent plateau that early stopping cuts off).
+Diagnostics on ML, TS2 nAUPRC (CT .993): head on correlations only, linear signed .03 vs |r| .993;
+full models retrained, signed .455/.772/.004 (CM/Trf/bGRU) vs |r| .982/.987/.982. The 3-variable sets have
+positive coefficients only, so nothing changes there.
+
+Plan: change only the injection (|r| instead of r), keep the selected configs, early stopping and data.
+Present it in 7.1 next to the original results and released weights as a v1 update, not as v2.
+
+Code: flag `corr_abs` that applies `abs()` to `lagged_batch_corr` in `data/generator.py:deterministic_ds`
+and, for rivers, in `causalrivers/experiments/causal_discovery_zoo` (`finetune_cp.py`,
+`methods/causal_pretraining.py`). Configs from the selected runs with the flag set, plus manifest entries
+so `rescore.py`, `20_breadth.py` and `30_scaling.py` pick them up.
+
+| Priority | Runs | Seeds | Purpose | Status |
+|---|---|---|---|---|
+| 1 | Single ML, MNL, XLNL, selected medium configs (Trf, uGRU, bGRU, CM, MLP) | 5 | shows the fix (expected: CT level) | open |
+| 2 | Joint big, all architectures | 5 | updated release next to the released weights | open |
+| 3 | Scaling 7, 10, 15 vars, existing size configs | 3-5 | only synthetic regime where CT is not a ceiling (CT TS1: .892 at 10, .695 at 15 vars) | open |
+| 4 | Rivers: fine-tune updated Joint big GRU on Bavaria Random-5 (select on Bavaria val), plus the same GRU from random init | 3 | real-data argument, does pretraining matter | open |
+
+Skip Kuramoto (already above CT) and the 3-variable sets. The original rivers fine-tuning model was
+selected on East Random-5 test F1, validation-selected runs give the same AUROC (see thesis memory
+`cp-v1-rivers-finetune-check`), so 4 also fixes the selection.
+
 `10_sanity.py` reads CM from both folders and keeps both in the CSVs (column `head_activation`);
 the tables report only the corrected head.
 
