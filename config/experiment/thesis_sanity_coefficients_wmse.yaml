@@ -1,0 +1,15 @@
+# @package _global_
+# Thesis Ch. 7.1 sanity check: recover exact coefficients of a fixed graph (uncover_params_small),
+# with the weighted MSE (non-zero entries weighted 90x, helpers/tools.py:weighted_mse).
+# Identical to thesis_sanity_coefficients apart from the loss and the output folder.
+# Launch:  python train.py +experiment=thesis_sanity_coefficients_wmse hparams_search=thesis_sanity
+
+defaults:
+  - thesis_sanity_coefficients
+
+model:
+  loss_type: wmse
+
+hydra:
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/sanity_coefficients_wmse/${now:%Y-%m-%d_%H-%M-%S}

@@ -1,0 +1,20 @@
+\begin{table*}[ht]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lccccc|ccccc|c}
+    \toprule
+        ~ & \multicolumn{5}{c|}{\textbf{Single}} & \multicolumn{5}{c|}{\textbf{Joint} (\emph{big})} & ~ \\
+        ~ & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{CT} \\
+    \midrule
+        \textbf{SL} & .997 & .997 & .997 & .996 & .998 & .167 & .978 & .997 & .959 & .996 & .998 \\
+        \textbf{ML} & .000 & .086 & .179 & .411 & .127 & .001 & .834 & .868 & .921 & .988 & .993 \\
+        \textbf{SNL} & .814 & .814 & .830 & .808 & .836 & .135 & .811 & .834 & .831 & .834 & .831 \\
+        \textbf{MNL} & .010 & .452 & .056 & .292 & .049 & .003 & .699 & .732 & .771 & .831 & .839 \\
+        \textbf{LNL} & .777 & .788 & .810 & .776 & .810 & .120 & .764 & .797 & .731 & .791 & .794 \\
+        \textbf{XLNL} & .000 & .217 & .333 & .099 & .037 & $-$.001 & .642 & .676 & .679 & .775 & .798 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Mean nAUPRC on \textit{Test-Set 2} per dataset: models trained on the dataset alone (\textbf{Single}, size \emph{small} for three and \emph{medium} for five variables) and models of size \emph{big} trained on all six datasets (\textbf{Joint}), scored on the samples of the same dataset within the \textbf{Joint} test set. Means over the reruns of \cref{tab:cp:synthetic-1}.}
+\label{tab:cp:joint-subsets}
+\end{table*}

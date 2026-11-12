@@ -1,0 +1,50 @@
+# @package _global_
+# Thesis Ch. 7.1 CM rework (thesis_doc README E7.1.12): Kuramoto grid for CM with the corrected head
+# (model.convM_head_activation=True, see model/conv.py).
+#
+# Same grid as the original Kuramoto grid (cp_1/experiment_4_grid_kuramoto, CM part: 09-14-11-28-163296
+# = medium, 10-10-11-15-368782 = big, launched with kuramoto.yaml, since edited): lr {1e-4, 1e-3} x
+# batch {16, 64, 256} x wd {0, 0.01} x CR, correlation injection on, edge-count head off = 24 runs per size,
+# seed 42. Dataset kuramoto, 5 oscillators, lag 1.
+#
+# Launch (both sizes in one sweep, 48 jobs; blocks until they are done):
+#   python train.py hparams_search=thesis_cm_kuramoto_grid
+# The size of each run is recorded in its .hydra/overrides.yaml (model=medium.yaml / big.yaml).
+#
+# Afterwards: select per size the lowest validation MSE and rerun it with 10 seeds (thesis_cm_kuramoto_std.yaml).
+
+defaults:
+  - override /hydra/launcher: submitit_slurm
+
+n_vars: 5
+max_lags: 1
+corr_input: True
+regression_head: False
+
+data:
+  ds_path: /home/datasets4/stein/cp_v1_data/data/deterministic_ds  # = thesis/paths.yaml:data_root
+  ds_name: kuramoto
+
+model:
+  model_type: convM
+  convM_head_activation: True
+
+hydra:
+  mode: "MULTIRUN"
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/cm_fixed/kuramoto_grid/${now:%Y-%m-%d_%H-%M-%S}
+  launcher:
+    cpus_per_task: 8
+    gpus_per_task: 1
+    mem_gb: 24
+    timeout_min: 1200
+    partition: robolab
+    name: cp_cm_kuramoto
+  sweeper:
+    params:
+      model: medium.yaml,big.yaml
+      seed: 42
+      model.optimizer_lr: 0.0001,0.001
+      data.batch_size: 16,64,256
+      model.weight_decay: 0,0.01
+      model.corr_regularization: False,True

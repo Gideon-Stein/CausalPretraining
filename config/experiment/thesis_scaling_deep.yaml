@@ -1,0 +1,38 @@
+# @package _global_
+# Thesis Ch. 7.1 scaling with model size (fig:cp:scaling): Trf-deep reruns, missing from the original
+# std reruns. Configurations are the lowest-Val_MSE Trf-deep runs of the scaling grid
+# (experimental_results/synthetic_data_2_grid_results/splitted_run_2, cp_1/experiment_3_scale_up_deep):
+#   7 vars  (scale_up_2): lr 1e-3, batch 256, wd 0.01, CR on   <- defaults below
+#   10 vars (scale_up):   lr 1e-4, batch 256, wd 0,    CR off
+# Training settings are the train.yaml defaults, as in the original reruns.
+#
+# Launch (Slurm, see hparams_search/thesis_scaling_lcm.yaml):
+#   7 vars:  python train.py +experiment=thesis_scaling_deep hparams_search=thesis_scaling_lcm seed=42,43,44,45,46
+#   10 vars: python train.py +experiment=thesis_scaling_deep hparams_search=thesis_scaling_lcm seed=42,43,44,45,46 \
+#              n_vars=10 data.ds_name=scale_up model.optimizer_lr=0.0001 model.weight_decay=0 model.corr_regularization=False
+
+defaults:
+  - override /model: deep.yaml
+
+n_vars: 7
+max_lags: 3
+regression_head: False
+corr_input: True
+distinguish_mode: False
+
+data:
+  ds_path: /home/datasets4/stein/cp_v1_data/data/deterministic_ds  # = thesis/paths.yaml:data_root
+  ds_name: scale_up_2
+  batch_size: 256
+  binary: True
+
+model:
+  model_type: transformer
+  optimizer_lr: 0.001
+  weight_decay: 0.01
+  corr_regularization: True
+  loss_type: bce
+
+hydra:
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/scaling_deep/${data.ds_name}/${now:%Y-%m-%d_%H-%M-%S}

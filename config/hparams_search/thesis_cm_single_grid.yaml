@@ -1,0 +1,50 @@
+# @package _global_
+# Thesis Ch. 7.1 CM rework (thesis_doc README E7.1.12): Single grid for CM with the corrected head
+# (model.convM_head_activation=True, see model/conv.py).
+#
+# Same grid as the original Single grid (cp_1/experiment_1_grid_search, grid_eval.csv), restricted to CM:
+# lr {1e-4, 1e-3} x batch {16, 64, 256} x wd {0, 0.01} x CR x correlation injection x edge-count head
+# = 96 runs per dataset, seed 42 (the original second pass used the same seed, so one pass suffices).
+# Apart from ds_path, the composed config equals the original runs (checked 2026-11-06).
+# The original launcher had no GPU; here 1 GPU on robolab.
+#
+# Launch, one sweep per dataset (each blocks until its jobs are done -> separate tmux windows):
+#   3 vars (small):  for ds in base poly nl
+#     python train.py hparams_search=thesis_cm_single_grid data.ds_name=$ds
+#   5 vars (medium): for ds in big_base_mirror big_poly big_nl
+#     python train.py hparams_search=thesis_cm_single_grid data.ds_name=$ds model=medium.yaml n_vars=5 max_lags=3
+# Thesis names: SL=base, SNL=poly, LNL=nl, ML=big_base_mirror, MNL=big_poly, XLNL=big_nl.
+#
+# Afterwards: select per dataset the lowest validation MSE (as for the original grid) and rerun it with
+# 10 seeds (42-51).
+
+defaults:
+  - override /hydra/launcher: submitit_slurm
+
+data:
+  ds_path: /home/datasets4/stein/cp_v1_data/data/deterministic_ds  # = thesis/paths.yaml:data_root
+
+model:
+  model_type: convM
+  convM_head_activation: True
+
+hydra:
+  mode: "MULTIRUN"
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/cm_fixed/single_grid/${data.ds_name}/${now:%Y-%m-%d_%H-%M-%S}
+  launcher:
+    cpus_per_task: 4
+    gpus_per_task: 1
+    mem_gb: 8
+    timeout_min: 6969
+    partition: robolab
+    name: cp_cm_single
+  sweeper:
+    params:
+      seed: 42
+      model.optimizer_lr: 0.0001,0.001
+      data.batch_size: 16,64,256
+      model.weight_decay: 0,0.01
+      model.corr_regularization: False,True
+      corr_input: False,True
+      regression_head: False,True

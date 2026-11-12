@@ -1,0 +1,50 @@
+\begin{table}[ht]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.5pt}
+    \begin{tabular}{llccccc|c}
+    \toprule
+        ~ & CI & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{Ref.} \\
+    \midrule
+        \multicolumn{8}{c}{\textit{Nonlinearity}, AUROC} \\
+    \midrule
+        \multirow{2}{*}{Train} & yes & .842 (.044) & .880 (.112) & .855 (.109) & .906 (.028) & .991 (.001) & \multirow{2}{*}{.500} \\
+        ~ & no & .861 (.050) & .648 (.042) & .669 (.010) & .887 (.039) & .606 (.020) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{In-dist.} & yes & .537 (.026) & .816 (.170) & .710 (.158) & .706 (.025) & .979 (.001) & \multirow{2}{*}{.500} \\
+        ~ & no & .517 (.036) & .534 (.009) & .517 (.012) & .623 (.027) & .515 (.013) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{Shifted} & yes & .524 (.009) & .793 (.190) & .686 (.133) & .627 (.015) & .959 (.006) & \multirow{2}{*}{.500} \\
+        ~ & no & .510 (.017) & .510 (.009) & .504 (.014) & .570 (.030) & .502 (.011) & ~ \\
+    \midrule
+        \multicolumn{8}{c}{\textit{Shuffled labels}, nAUPRC} \\
+    \midrule
+        \multirow{2}{*}{Train} & yes & .186 (.016) & .040 (.004) & .055 (.006) & .239 (.018) & .044 (.006) & \multirow{2}{*}{.001} \\
+        ~ & no & .176 (.021) & .029 (.005) & .050 (.005) & .246 (.031) & .035 (.002) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{In-dist.} & yes & .004 (.011) & .005 (.009) & .005 (.012) & $-$.001 (.019) & .017 (.017) & \multirow{2}{*}{.032} \\
+        ~ & no & .003 (.011) & .008 (.019) & .010 (.014) & .008 (.010) & .013 (.011) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{Shifted} & yes & .001 (.011) & $-$.007 (.017) & $-$.008 (.019) & $-$.001 (.017) & $-$.001 (.010) & \multirow{2}{*}{$-$.020} \\
+        ~ & no & .003 (.013) & $-$.010 (.009) & .000 (.005) & .000 (.006) & $-$.003 (.004) & ~ \\
+    \midrule
+        \multicolumn{8}{c}{\textit{Coefficients (MSE)}, $R^2$ of the self-links} \\
+    \midrule
+        \multirow{2}{*}{Train} & yes & $-$.713 (.237) & $-$.149 (.101) & $-$.496 (.376) & $-$.227 (.225) & $-$.659 (.477) & \multirow{2}{*}{.603} \\
+        ~ & no & $-$.844 (.451) & $-$.215 (.160) & $-$.244 (.150) & $-$.189 (.098) & $-$.689 (.420) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{In-dist.} & yes & $-$1.986 (.701) & $-$.391 (.433) & $-$.620 (.339) & $-$26.998 (14.577) & $-$.791 (.500) & \multirow{2}{*}{.607} \\
+        ~ & no & $-$2.076 (1.093) & $-$.221 (.156) & $-$.397 (.220) & $-$9.759 (9.251) & $-$.719 (.357) & ~ \\
+    \midrule
+        \multicolumn{8}{c}{\textit{Coefficients (WMSE)}, $R^2$ of the self-links} \\
+    \midrule
+        \multirow{2}{*}{Train} & yes & $-$.860 (.413) & $-$.075 (.113) & $-$.322 (.274) & $-$.764 (1.908) & $-$.759 (.394) & \multirow{2}{*}{.603} \\
+        ~ & no & $-$.911 (.480) & $-$.089 (.040) & $-$.314 (.127) & $-$.478 (.704) & $-$.530 (.198) & ~ \\
+    \cmidrule{2-8}
+        \multirow{2}{*}{In-dist.} & yes & $-$4.761 (2.038) & $-$.174 (.083) & $-$.614 (.306) & $-$15.642 (12.378) & $-$.934 (.386) & \multirow{2}{*}{.607} \\
+        ~ & no & $-$4.685 (2.632) & $-$.152 (.044) & $-$.700 (.136) & $-$13.874 (16.751) & $-$.614 (.274) & ~ \\
+    \bottomrule
+    \end{tabular}
+    \caption{Further sanity checks: mean over 5 seeds, with the standard deviation in brackets, with (\emph{yes}) and without (\emph{no}) correlation injection (CI), on the training split (\emph{Train}), the in-distribution split (\emph{In-dist.}, coefficients from the training range $[0.3,0.5]$), and the shifted split (coefficients from $[0.2,0.3]$); for the shuffled labels, these are \textit{Test-Set 1} and \textit{Test-Set 2} of \textbf{SL}, and the training split carries the permuted labels. For the coefficients, $R^2$ is computed per split on the self-links of the fixed graph, relative to their mean on that split ($R^2=0$); the shifted split is omitted there (see text). \textbf{Ref.} is an input-blind predictor for the AUROC and the nAUPRC and, for the coefficients, a least-squares fit on the known graph.}
+    \label{tab:cp:sanity}
+\end{table}

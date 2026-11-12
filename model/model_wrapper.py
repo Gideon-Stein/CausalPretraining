@@ -55,6 +55,7 @@ class Architecture_PL(pl.LightningModule):
         # patch_size = 12,
         convM_hidden_size1=100,
         conv1D=False,
+        convM_head_activation=False,  # False = original (linear) CM head, see model/conv.py
         # mlp specifics
         mlp_hidden_size1=150,
         mlp_hidden_size2=100,
@@ -127,6 +128,7 @@ class Architecture_PL(pl.LightningModule):
                 regression_head=self.regression_head,
                 conv1D=conv1D,
                 full_representation_mode=self.full_representation_mode,
+                head_activation=convM_head_activation,
             )
         elif self.model_type == "mlp":
             self.model = mlp(

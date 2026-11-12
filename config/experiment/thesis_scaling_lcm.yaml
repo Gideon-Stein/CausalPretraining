@@ -1,0 +1,39 @@
+# @package _global_
+# Thesis Ch. 7.1 scaling with model size (fig:cp:scaling): additional LCM-Trf reruns.
+# Configuration identical to the original LCM-Trf reruns on 10 variables
+# (cp_1/experiment_3_scale_up_deep_std/2024-01-24/lcm/16-49-09, of which only seeds 42 and 43 trained;
+# seeds 44-46 crashed before the first epoch). Training settings are the train.yaml defaults, as in the
+# original runs: 1000 epochs, early stopping on val_loss with patience 40, 16-mixed precision.
+# LCM only enlarges Trf and CM (config/model/lcm.yaml); CM is not scaled further (at chance from 5 vars on).
+#
+# Launch (Slurm, see hparams_search/thesis_scaling_lcm.yaml):
+#   10 vars, missing seeds:  python train.py +experiment=thesis_scaling_lcm hparams_search=thesis_scaling_lcm
+#   7 vars, all seeds:       python train.py +experiment=thesis_scaling_lcm hparams_search=thesis_scaling_lcm \
+#                              n_vars=7 data.ds_name=scale_up_2 seed=42,43,44,45,46
+# The 7-variable runs reuse the 10-variable configuration: the grid search had no LCM on 7 variables.
+
+defaults:
+  - override /model: lcm.yaml
+
+n_vars: 10
+max_lags: 3
+regression_head: False
+corr_input: True
+distinguish_mode: False
+
+data:
+  ds_path: /home/datasets4/stein/cp_v1_data/data/deterministic_ds  # = thesis/paths.yaml:data_root
+  ds_name: scale_up
+  batch_size: 64
+  binary: True
+
+model:
+  model_type: transformer
+  optimizer_lr: 0.001
+  weight_decay: 0
+  corr_regularization: False
+  loss_type: bce
+
+hydra:
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/scaling_lcm/${data.ds_name}/${now:%Y-%m-%d_%H-%M-%S}

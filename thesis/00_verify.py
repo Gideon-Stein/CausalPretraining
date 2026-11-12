@@ -62,6 +62,10 @@ def index_runs(folders):
     return idx
 
 
+# std entries with a committed CSV; the cm_fixed entries (root: new) are new runs without one
+STD_WITH_CSV = [n for n, e in MANIFEST["std"].items() if "csv" in e]
+
+
 def matched_runs(name):
     """Committed std CSV of an experiment, with the run folder of every row."""
     entry = MANIFEST["std"][name]
@@ -89,7 +93,7 @@ def check_data():
 
 def check_runs():
     ok = True
-    for name in MANIFEST["std"]:
+    for name in STD_WITH_CSV:
         df = matched_runs(name)
         n = df["run_dir"].map(len)
         good = (n == 1).all()
@@ -116,7 +120,7 @@ def built_arch(state_dict):
 
 def check_arch():
     ok = True
-    folders = sorted({f for e in MANIFEST["std"].values() for f in e["runs"]})
+    folders = sorted({f for n in STD_WITH_CSV for f in MANIFEST["std"][n]["runs"]})
     for folder in folders:
         n, wrong, no_ckpt = 0, 0, 0
         for cfg in (PATHS["runs_root"] / folder).rglob(".hydra/config.yaml"):
@@ -137,7 +141,8 @@ def check_arch():
 def check_rescore(k, seed=0):
     ok = True
     rng = random.Random(seed)
-    for name, entry in MANIFEST["std"].items():
+    for name in STD_WITH_CSV:
+        entry = MANIFEST["std"][name]
         df = matched_runs(name)
         df = df[df["run_dir"].map(len) == 1]
         for i in rng.sample(range(len(df)), min(k, len(df))):

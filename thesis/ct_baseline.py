@@ -11,7 +11,15 @@ per dataset, [train, val, <ds>/simple_test.p, <ds>_additional/simple_test.p] as
 (roc curve, auroc); Kuramoto has [train, val, test].
 
 Writes thesis/results/ct_baseline.csv: dataset, split (train/val/ts1/ts2), stored and
-recomputed AUROC.
+recomputed AUROC (pooled over all entries, as in the paper), and the thesis metrics nshd, nauprc (per graph,
+common.metrics: Kuramoto without self-links, Joint at the true size of each sample, graphs without edges
+excluded) with auroc_scored (pooled over the scored entries only).
+
+
+NOTABLY, WE IGNORE THE OTHER BASELINES HERE AS WE DO THEM LATER ON ON THE REAL BENCHMARKS
+GVAR IN THEORIGINAL PAPER IS WORSE BECAUSE OF THE COEFFICIENT ESTIMATION THAT IS OFTEN HIGH AS THE VARIANCE OF THE FILLING IS REALLY LOW, 
+GOOD TO KEEP THAT IN MIND:
+
 """
 import argparse
 import pickle
@@ -19,8 +27,10 @@ import pickle
 import pandas as pd
 from torch.utils.data import DataLoader
 
-from common import PATHS, SCALE_UP, THESIS, deterministic_ds
-from helpers.tools import corr_run_full_ds, corr_run_full_ds_masked_diagonal
+import torch
+
+from common import PATHS, SCALE_UP, THESIS, deterministic_ds, entry_mask, metrics
+from helpers.tools import corr_ci, corr_run_full_ds, corr_run_full_ds_masked_diagonal
 
 SINGLE_JOINT = ["base", "big_base", "big_base_mirror", "poly", "big_poly", "nl", "big_nl", "joint"]
 STORED_SPLITS = ["train", "val", "ts2", "ts1"]
@@ -48,13 +58,30 @@ def loader(folder, split):
     return DataLoader(ds, batch_size=500, shuffle=False)
 
 
-def recompute(dataset, split):
+def split_file(dataset, split):
     if dataset == "kuramoto":
-        file_split = {"train": "train", "val": "val", "ts2": "test"}[split]
-        return float(corr_run_full_ds_masked_diagonal(loader("kuramoto", file_split), size=5)[1])
-    folder = dataset + "_additional" if split == "ts1" else dataset
-    file_split = "test" if split in ("ts1", "ts2") else split
+        return "kuramoto", {"train": "train", "val": "val", "ts2": "test"}[split]
+    return (dataset + "_additional" if split == "ts1" else dataset), ("test" if split in ("ts1", "ts2") else split)
+
+
+def recompute(dataset, split):
+    """Pooled AUROC with the original functions (comparable to the stored value)."""
+    folder, file_split = split_file(dataset, split)
+    if dataset == "kuramoto":
+        return float(corr_run_full_ds_masked_diagonal(loader(folder, file_split), size=5)[1])
     return float(corr_run_full_ds(loader(folder, file_split))[1])
+
+
+def thesis_metrics(dataset, split):
+    """nSHD, nAUPRC per graph (and AUROC over the scored entries) of the same CT scores (|lagged corr.|)."""
+    folder, file_split = split_file(dataset, split)
+    preds, labs = [], []
+    for x, y in loader(folder, file_split):
+        preds.append(corr_ci(x, max_lags=y.shape[3])[0])
+        labs.append(y)
+    pred, lab = torch.cat(preds), torch.cat(labs)
+    m = metrics(pred, lab, entry_mask(PATHS["data_root"] / folder / f"simple_{file_split}.p", lab.shape))
+    return {"nshd": m["nshd"], "nauprc": m["nauprc"], "auroc_scored": m["auroc"], "no_edges": m["no_edges"]}
 
 
 def main():
@@ -69,8 +96,10 @@ def main():
     for i in df.index[todo]:
         r = df.loc[i]
         df.loc[i, "recomputed"] = recompute(r["dataset"], r["split"])
-        print(f"{r['dataset']:16s} {r['split']:5s} stored {r['stored']:.4f} "
-              f"recomputed {df.loc[i, 'recomputed']:.4f}", flush=True)
+        for k, v in thesis_metrics(r["dataset"], r["split"]).items():
+            df.loc[i, k] = v
+        print(f"{r['dataset']:16s} {r['split']:5s} stored {r['stored']:.4f} recomputed {df.loc[i, 'recomputed']:.4f} "
+              f"nSHD {df.loc[i, 'nshd']:.4f} nAUPRC {df.loc[i, 'nauprc']:.4f}", flush=True)
 
     df["abs_diff"] = (df["stored"] - df["recomputed"]).abs()
     out = THESIS / "results" / "ct_baseline.csv"

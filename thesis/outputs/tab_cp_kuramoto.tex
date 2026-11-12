@@ -1,0 +1,18 @@
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{llccccc}
+    \toprule
+        & & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} \\
+    \midrule
+        \multirow{3}{*}{nAUPRC} & \textbf{Medium} & .312 (.033) & .675 (.039) & .644 (.127) & .834 (.044) & .380 (.056) \\
+        ~ & \textbf{Big} & .400 (.079) & .518 (.228) & .321 (.144) & .813 (.006) & .844 (.017) \\
+        ~ & \textbf{CT} & \multicolumn{5}{c}{.207} \\
+    \midrule
+        \multirow{3}{*}{nSHD} & \textbf{Medium} & .551 (.020) & .311 (.031) & .342 (.086) & .194 (.042) & .507 (.033) \\
+        ~ & \textbf{Big} & .496 (.049) & .413 (.149) & .550 (.090) & .213 (.006) & .181 (.018) \\
+        ~ & \textbf{CT} & \multicolumn{5}{c}{.622} \\
+    \bottomrule
+    \end{tabular}
+    \caption{Mean nAUPRC and nSHD (lower is better) on the Kuramoto test set, per graph and ignoring self-links, with the standard deviation over reruns in brackets.}
+\label{tab:cp:kuramoto}
+\end{table}

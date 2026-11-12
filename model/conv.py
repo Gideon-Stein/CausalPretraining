@@ -85,8 +85,13 @@ class conv_mixer(torch.nn.Module):
         regression_head=False,
         conv1D=False,
         full_representation_mode=False,
+        head_activation=False,
     ):
         super(conv_mixer, self).__init__()
+        # head_activation=True adds a ReLU after fc1, as in the heads of the other architectures.
+        # The original head (False) is fc1 -> BatchNorm -> fc2, i.e. linear in the injected correlations,
+        # so it cannot detect links whose correlation sign varies (random-sign datasets).
+        self.head_activation = head_activation
         self.convM_dim = convM_dim
         self.convM_depth = convM_depth
         self.kernel_size = kernel_size
@@ -170,6 +175,8 @@ class conv_mixer(torch.nn.Module):
         else:
             hidden2 = self.fc1(hidden1)
 
+        if self.head_activation:
+            hidden2 = self.relu(hidden2)
         bn2 = self.batch_norm(hidden2)
         hidden3 = self.fc2(bn2)
 

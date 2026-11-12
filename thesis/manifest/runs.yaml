@@ -31,6 +31,18 @@ std:
     csv: synthetic_data_2_grid_results/std/summary_lcm.csv
     runs: [experiment_3_scale_up_deep_std]
     thesis: fig:cp:scaling (LCM Trf)
+  # CM with the corrected head (model.convM_head_activation=True, thesis_doc README E7.1.12). No CSV;
+  # root: new = paths.yaml:new_runs_root. 20_breadth.py replaces the CM runs of `replaces` with these.
+  single_cm_fixed:
+    root: new
+    runs: [cm_fixed/single_std]
+    replaces: single
+    thesis: tab:cp:synthetic-1 (Single, CM)
+  joint_cm_fixed:
+    root: new
+    runs: [cm_fixed/joint_std]
+    replaces: joint_medium, joint_big (by model size)
+    thesis: tab:cp:synthetic-1 (Joint, CM)
   kuramoto:
     csv: kuramoto_grid_results/std/summary.csv
     runs: [experiment_4_std_kuramoto]

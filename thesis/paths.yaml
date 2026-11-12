@@ -22,3 +22,7 @@ runs_root: /home/datasets4/stein/cp_training_runs/cp_1
 
 # New runs started from this branch (sanity checks etc.) are written here.
 new_runs_root: /home/datasets4/stein/cp_training_runs/cp_1_thesis
+
+# Metric implementation shared with TCD-Arena (AUROC, exact nSHD, nAUPRC; thesis ch. 2.7).
+# Loaded by file path in common.py (its folder also holds a helpers.py that would shadow ours).
+tcd_scoring_tools: /home/stein/project_repos/thesis/thesis_code/TCD-Arena/cd_zoo/tools/scoring_tools.py

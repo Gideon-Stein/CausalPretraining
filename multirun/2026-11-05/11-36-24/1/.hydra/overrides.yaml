@@ -1,0 +1,15 @@
+- seed=42
+- model=medium.yaml
+- model.model_type=convM
+- model.convM_head_activation=True
+- n_vars=5
+- max_lags=3
+- data.ds_name=big_base_mirror
+- data.ds_path=/home/datasets4/stein/cp_v1_data/data/deterministic_ds
+- data.batch_size=16
+- model.optimizer_lr=0.001
+- model.weight_decay=0
+- model.corr_regularization=False
+- corr_input=True
+- regression_head=False
+- model.loss_type=bce

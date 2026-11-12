@@ -1,0 +1,102 @@
+paths:
+  log_dir: run
+  checkpoint_dir: ${paths.log_dir}
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: ${paths.checkpoint_dir}
+  max_epochs: 1000
+  accelerator: auto
+  devices: auto
+  precision: 16-mixed
+  check_val_every_n_epoch: 2
+  deterministic: true
+  enable_checkpointing: true
+  log_every_n_steps: 313
+n_vars: 5
+max_lags: 3
+regression_head: false
+corr_input: true
+distinguish_mode: false
+early_stopping:
+  patience: 40
+  min_delta: 0
+extras:
+  ignore_warnings: false
+  pretty_errors: true
+tensorboard:
+  _target_: lightning.pytorch.loggers.tensorboard.TensorBoardLogger
+  save_dir: ${paths.checkpoint_dir}/
+  name: 'null'
+  log_graph: false
+  default_hp_metric: true
+  prefix: ''
+  version: null
+seed: 42
+data:
+  _target_: data.generator.GeneratorDataModule
+  ds_path: /home/datasets4/stein/cp_v1_data/data/deterministic_ds
+  ds_name: big_base_mirror
+  train_ds_name: ${data.ds_path}/${data.ds_name}/simple_train.p
+  test_ds_name: ${data.ds_path}/${data.ds_name}/simple_test.p
+  val_ds_name: ${data.ds_path}/${data.ds_name}/simple_val.p
+  deterministic_ds: true
+  batch_size: 16
+  n_vars: ${n_vars}
+  max_lags: ${max_lags}
+  binary: true
+  regression: ${regression_head}
+  corr_input: ${corr_input}
+  epoch_size: 5000
+  link_threshold: 0.85
+  param_range:
+  - 0.3
+  - 0.5
+  restrict_links: true
+  noise_var: 0.4
+  time_series_n: 500
+  functional_class: linear
+  distinguish_mode: ${distinguish_mode}
+model:
+  _target_: model.model_wrapper.Architecture_PL
+  model_type: convM
+  d_model: 128
+  n_heads: 2
+  num_encoder_layers: 1
+  d_ff: 128
+  dropout: 0.05
+  distil: true
+  trans_max_ts_length: 600
+  gruB_hidden_size1: 96
+  gruB_hidden_size2: 128
+  gruB_hidden_size3: 128
+  gruB_num_layers: 1
+  gruU_hidden_size1: 96
+  gruU_hidden_size2: 128
+  gruU_hidden_size3: 128
+  gruU_num_layers: 2
+  convM_dim: 128
+  convM_depth: 6
+  convM_hidden_size1: 128
+  conv1D: true
+  convM_head_activation: true
+  mlp_max_ts_length: 256
+  mlp_hidden_size1: 128
+  mlp_hidden_size2: 128
+  mlp_hidden_size3: 128
+  mlp_hidden_size4: 128
+  n_vars: ${n_vars}
+  max_lags: ${max_lags}
+  regression_head: ${regression_head}
+  soft_adapt: false
+  corr_input: ${corr_input}
+  link_thresholds:
+  - 0.25
+  - 0.5
+  - 0.75
+  corr_regularization: false
+  optimizer_lr: 0.001
+  weight_decay: 0
+  loss_type: bce
+  val_metric: ME
+  distinguish_mode: ${distinguish_mode}
+  full_representation_mode: false

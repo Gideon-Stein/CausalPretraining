@@ -1,0 +1,15 @@
+# @package _global_
+# Thesis Ch. 7.1 scaling: complete XL-Trf grid on 10 variables. Same configuration as
+# experiment/thesis_scaling_lcm.yaml; only the output folder differs, so the grid runs stay separate from
+# the reruns. The 24 configurations and their history are in hparams_search/thesis_scaling_lcm_grid.yaml.
+#
+# Launch (Slurm):
+#   python train.py +experiment=thesis_scaling_lcm_grid hparams_search=thesis_scaling_lcm_grid
+
+defaults:
+  - thesis_scaling_lcm
+  - _self_
+
+hydra:
+  sweep:
+    dir: /home/datasets4/stein/cp_training_runs/cp_1_thesis/scaling_lcm_grid/${data.ds_name}/${now:%Y-%m-%d_%H-%M-%S}

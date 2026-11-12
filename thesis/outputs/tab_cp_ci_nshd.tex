@@ -1,0 +1,21 @@
+\begin{table}[ht]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccc|c}
+    \toprule
+        ~ & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{All} \\
+    \midrule
+        \textit{3 variables} & \multicolumn{6}{c}{} \\
+        \quad $\Delta$nSHD (paired) & $-$.395 & $-$.725 & $-$.716 & $-$.651 & $-$.623 & $-$.622 \\
+        \quad Converged (\%) & 0\,$\to$\,72 & 7\,$\to$\,100 & 8\,$\to$\,100 & 54\,$\to$\,100 & 39\,$\to$\,100 & 22\,$\to$\,94 \\
+        \quad Best nSHD & .91\,$\to$\,.15 & .70\,$\to$\,.14 & .73\,$\to$\,.14 & .41\,$\to$\,.15 & .19\,$\to$\,.14 & .19\,$\to$\,.14 \\
+        \textit{5 variables} & \multicolumn{6}{c}{} \\
+        \quad $\Delta$nSHD (paired) & +.001 & $-$.029 & $-$.028 & $-$.020 & $-$.013 & $-$.018 \\
+        \quad Converged (\%) & 0\,$\to$\,0 & 0\,$\to$\,10 & 0\,$\to$\,8 & 0\,$\to$\,7 & 0\,$\to$\,1 & 0\,$\to$\,5 \\
+        \quad Best nSHD & .98\,$\to$\,.98 & .98\,$\to$\,.63 & .98\,$\to$\,.57 & .98\,$\to$\,.69 & .98\,$\to$\,.88 & .98\,$\to$\,.55 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Effect of correlation injection in the \emph{Single} grid search, on the validation split (coefficients from $[0.2,0.3]$), over the three three-variable (model size \emph{small}) and three five-variable datasets (\emph{medium}) and all other hyperparameters. nSHD is computed per graph and averaged; $\Delta$nSHD (paired) is the mean difference between configurations that differ only in the mechanism (on $-$ off). Converged is the share of configurations with an nSHD of at most 0.9, and Best nSHD the mean over datasets of the best configuration, each without $\to$ with the mechanism. Both passes of the grid use the same seed and are averaged. CM uses the corrected output head (\cref{cp:architectures}) and was run once.}
+    \label{tab:cp:ci:nshd}
+\end{table}

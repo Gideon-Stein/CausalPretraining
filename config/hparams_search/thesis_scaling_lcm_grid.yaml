@@ -1,0 +1,51 @@
+# @package _global_
+# Thesis Ch. 7.1 scaling with model size (fig:cp:scaling): complete XL-Trf ("lcm") grid on 10 variables.
+#
+# The original scaling grid (experimental_results/synthetic_data_2_grid_results/splitted_run_2,
+# cp_1/experiment_3_scale_up_deep/04-13-12-29-001239) started all 24 configurations below for XL-Trf on
+# scale_up, but only 7 wrote a checkpoint; the other 17 were killed without an error message (most likely
+# by Slurm: time limit or memory). Present (legacy Val_Auroc):
+#   lr 1e-3: bs 64 wd 0    CR off (.710, selected for the reruns) | bs 16 wd .01 CR on | bs 64 wd .01 CR on
+#   lr 1e-4: bs 64 wd .01  CR on  | bs 64 wd .01 CR off | bs 64 wd 0 CR off | bs 16 wd .01 CR off
+# This sweep reruns the full grid (the 7 present ones as a reproducibility check), one run per
+# configuration with seed 42, as in the original grid. Everything else comes from
+# experiment/thesis_scaling_lcm.yaml via experiment/thesis_scaling_lcm_grid.yaml (CI on, edge-count head off,
+# BCE, train.yaml defaults; output folder cp_1_thesis/scaling_lcm_grid).
+#
+# Launch (Slurm):
+#   python train.py +experiment=thesis_scaling_lcm_grid hparams_search=thesis_scaling_lcm_grid
+# Smoke test of the largest batch first (most likely cause of the original failures):
+#   python train.py +experiment=thesis_scaling_lcm_grid hparams_search=thesis_scaling_lcm_grid \
+#     data.batch_size=256 model.optimizer_lr=0.001 model.weight_decay=0 model.corr_regularization=False \
+#     trainer.max_epochs=2 'hydra.sweep.dir=/home/datasets4/stein/cp_training_runs/cp_1_thesis/local_test/lcm_grid_smoke'
+# If the selected configuration (lowest validation MSE) differs from the one above, it needs 5 new
+# reruns (seeds 42-46) with experiment/thesis_scaling_lcm.yaml.
+#
+# Result (cp_1_thesis/scaling_lcm_grid/scale_up/2026-11-04_18-2*, 24/24 runs, batch 64/256 run as
+# 32 x accumulate 2/8 for memory): 9 runs diverged (val MSE NaN). Lowest val MSE: lr 1e-3, batch 64, wd 0,
+# CR on (.0788; eval AUROC val/TS1/TS2 .725/.715/.720). The original selection (lr 1e-3, bs 64, wd 0, CR off)
+# reaches only .51 with seed 42 now, and .63-.67 with seeds 44-46 (scaling_lcm/2026-11-03_15-31-33).
+# -> 5 new reruns of the new selection (2026-11-10):
+#   python train.py +experiment=thesis_scaling_lcm hparams_search=thesis_scaling_lcm seed=42,43,44,45,46 \
+#     model.optimizer_lr=0.001 data.batch_size=32 +trainer.accumulate_grad_batches=2 model.weight_decay=0 \
+#     model.corr_regularization=True 'hydra.sweep.dir=/home/datasets4/stein/cp_training_runs/cp_1_thesis/scaling_lcm_v2/${now:%Y-%m-%d_%H-%M-%S}'
+
+defaults:
+  - override /hydra/launcher: submitit_slurm
+
+hydra:
+  mode: "MULTIRUN"
+  launcher:
+    cpus_per_task: 8
+    gpus_per_task: 1
+    mem_gb: 48
+    timeout_min: 7200
+    partition: robolab
+    name: cp_lcm_grid
+  sweeper:
+    params:
+      seed: 42
+      model.optimizer_lr: 0.0001,0.001
+      data.batch_size: 16,64,256
+      model.weight_decay: 0,0.01
+      model.corr_regularization: False,True

@@ -1,0 +1,30 @@
+\begin{table}[ht]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.5pt}
+    \begin{tabular}{lllccccc|c}
+    \toprule
+        ~ & ~ & CI & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{Ref.} \\
+    \midrule
+        \multirow{6}{*}{\rotatebox[origin=c]{90}{\textbf{In-dist.}}} & \multirow{2}{*}{nAUPRC} & yes & .704 (.096) & .997 (.002) & .997 (.003) & .976 (.011) & .998 (.001) & \multirow{2}{*}{.399} \\
+        ~ & ~ & no & .306 (.034) & .260 (.105) & .210 (.021) & .949 (.021) & .860 (.062) & ~ \\
+    \cmidrule{2-9}
+        ~ & \multirow{2}{*}{nSHD} & yes & .282 (.078) & .007 (.003) & .005 (.005) & .032 (.011) & .004 (.002) & \multirow{2}{*}{.581} \\
+        ~ & ~ & no & .587 (.019) & .671 (.078) & .703 (.020) & .062 (.022) & .145 (.066) & ~ \\
+    \cmidrule{2-9}
+        ~ & \multirow{2}{*}{Macro acc.} & yes & .583 (.076) & .922 (.072) & .975 (.032) & .895 (.035) & .982 (.019) & \multirow{2}{*}{.200} \\
+        ~ & ~ & no & .276 (.013) & .313 (.017) & .276 (.014) & .853 (.045) & .594 (.064) & ~ \\
+    \midrule
+        \multirow{6}{*}{\rotatebox[origin=c]{90}{\textbf{Shifted}}} & \multirow{2}{*}{nAUPRC} & yes & .400 (.068) & .935 (.029) & .951 (.026) & .664 (.095) & .931 (.021) & \multirow{2}{*}{.337} \\
+        ~ & ~ & no & .155 (.028) & .136 (.043) & .120 (.018) & .612 (.099) & .622 (.083) & ~ \\
+    \cmidrule{2-9}
+        ~ & \multirow{2}{*}{nSHD} & yes & .513 (.050) & .101 (.032) & .077 (.031) & .328 (.070) & .098 (.026) & \multirow{2}{*}{.619} \\
+        ~ & ~ & no & .693 (.019) & .747 (.034) & .758 (.010) & .360 (.074) & .348 (.073) & ~ \\
+    \cmidrule{2-9}
+        ~ & \multirow{2}{*}{Macro acc.} & yes & .411 (.035) & .891 (.085) & .928 (.070) & .600 (.116) & .926 (.034) & \multirow{2}{*}{.200} \\
+        ~ & ~ & no & .233 (.018) & .258 (.008) & .228 (.012) & .553 (.081) & .497 (.064) & ~ \\
+    \bottomrule
+    \end{tabular}
+    \caption{Sanity check \emph{Distinguishing between graphs}: mean over 5 seeds, with the standard deviation in brackets, with (\emph{yes}) and without (\emph{no}) correlation injection (CI). The in-distribution split (\emph{In-dist.}) draws the coefficients from the training range $[0.3,0.5]$, the shifted split from $[0.2,0.3]$. Macro accuracy assigns every sample the nearest of the 5 graphs and averages the accuracy over the graphs, which occur with unequal frequency. nSHD (lower is better) and nAUPRC are computed per graph and averaged. \textbf{Ref.} is an input-blind predictor that outputs the training frequency of every edge; any constant prediction has a macro accuracy of 1/5.}
+    \label{tab:cp:sanity:graphs}
+\end{table}

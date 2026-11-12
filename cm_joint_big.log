@@ -1,0 +1,140 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 764, in resolve_parse_tree
+    return visitor.visit(parse_tree)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 206, in accept
+    return visitor.visitConfigValue(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 101, in visitConfigValue
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 342, in accept
+    return visitor.visitText(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 301, in visitText
+    return self._unescape(list(ctx.getChildren()))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 389, in _unescape
+    text = str(self.visitInterpolation(node))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 125, in visitInterpolation
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 1041, in accept
+    return visitor.visitInterpolationResolver(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 179, in visitInterpolationResolver
+    return self.resolver_interpolation_callback(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 750, in resolver_interpolation_callback
+    return self._evaluate_custom_resolver(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 694, in _evaluate_custom_resolver
+    return resolver(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/omegaconf.py", line 445, in resolver_wrapper
+    ret = resolver(*args, **kwargs)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/utils.py", line 220, in <lambda>
+    lambda path: OmegaConf.select(cast(DictConfig, HydraConfig.get()), path),
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/hydra_config.py", line 31, in get
+    raise ValueError("HydraConfig was not set")
+ValueError: HydraConfig was not set
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/_internal/utils.py", line 466, in <lambda>
+    lambda: hydra.multirun(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/_internal/hydra.py", line 153, in multirun
+    sweeper = Plugins.instance().instantiate_sweeper(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/plugins.py", line 140, in instantiate_sweeper
+    sweeper.setup(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/_internal/core_plugins/basic_sweeper.py", line 90, in setup
+    self.launcher = Plugins.instance().instantiate_launcher(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/plugins.py", line 155, in instantiate_launcher
+    launcher = self._instantiate(config.hydra.launcher)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/plugins.py", line 112, in _instantiate
+    plugin = instantiate(config=config, _target_=clazz)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 220, in instantiate
+    OmegaConf.resolve(config)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/omegaconf.py", line 785, in resolve
+    omegaconf._impl._resolve(cfg)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/_impl.py", line 40, in _resolve
+    _resolve_container_value(cfg, k)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/_impl.py", line 14, in _resolve_container_value
+    resolved = node._dereference_node()
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 246, in _dereference_node
+    node = self._dereference_node_impl(throw_on_resolution_failure=True)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 277, in _dereference_node_impl
+    return parent._resolve_interpolation_from_parse_tree(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 584, in _resolve_interpolation_from_parse_tree
+    resolved = self.resolve_parse_tree(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 764, in resolve_parse_tree
+    return visitor.visit(parse_tree)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 206, in accept
+    return visitor.visitConfigValue(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 101, in visitConfigValue
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 342, in accept
+    return visitor.visitText(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 301, in visitText
+    return self._unescape(list(ctx.getChildren()))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 389, in _unescape
+    text = str(self.visitInterpolation(node))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 125, in visitInterpolation
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 921, in accept
+    return visitor.visitInterpolationNode(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 158, in visitInterpolationNode
+    return self.node_interpolation_callback(inter_key, self.memo)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 745, in node_interpolation_callback
+    return self._resolve_node_interpolation(inter_key=inter_key, memo=memo)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 664, in _resolve_node_interpolation
+    parent, last_key, value = root_node._select_impl(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 531, in _select_impl
+    value = root._maybe_resolve_interpolation(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 719, in _maybe_resolve_interpolation
+    return self._resolve_interpolation_from_parse_tree(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 584, in _resolve_interpolation_from_parse_tree
+    resolved = self.resolve_parse_tree(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 769, in resolve_parse_tree
+    raise InterpolationResolutionError(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 764, in resolve_parse_tree
+    return visitor.visit(parse_tree)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 206, in accept
+    return visitor.visitConfigValue(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 101, in visitConfigValue
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 342, in accept
+    return visitor.visitText(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 301, in visitText
+    return self._unescape(list(ctx.getChildren()))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 389, in _unescape
+    text = str(self.visitInterpolation(node))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 125, in visitInterpolation
+    return self.visit(ctx.getChild(0))
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar/gen/OmegaConfGrammarParser.py", line 1041, in accept
+    return visitor.visitInterpolationResolver(self)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/grammar_visitor.py", line 179, in visitInterpolationResolver
+    return self.resolver_interpolation_callback(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 750, in resolver_interpolation_callback
+    return self._evaluate_custom_resolver(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/base.py", line 694, in _evaluate_custom_resolver
+    return resolver(
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/omegaconf/omegaconf.py", line 445, in resolver_wrapper
+    ret = resolver(*args, **kwargs)
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/utils.py", line 220, in <lambda>
+    lambda path: OmegaConf.select(cast(DictConfig, HydraConfig.get()), path),
+  File "/home/stein/anaconda3/envs/causal_pretraining/lib/python3.9/site-packages/hydra/core/hydra_config.py", line 31, in get
+    raise ValueError("HydraConfig was not set")
+omegaconf.errors.InterpolationResolutionError: ValueError raised while resolving interpolation: HydraConfig was not set

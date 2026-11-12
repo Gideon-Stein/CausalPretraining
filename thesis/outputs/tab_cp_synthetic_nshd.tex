@@ -1,0 +1,35 @@
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{l|lccccc|c}
+    \toprule
+        ~ & ~& \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf}& \textbf{CT}\\ \hline
+        \rowcolor[HTML]{82B366}
+        \multicolumn{8}{c}{\textit{Test-Set 1}}\\
+        \midrule
+        \rowcolor[HTML]{eff6ee}~ & \textbf{SL} & .001 (.000) & .001 (.001) & .000 (.000) & .001 (.001) & .000 (.001) & .012 \\
+        \rowcolor[HTML]{eff6ee}~ & \textbf{ML} & .985 (.003) & .906 (.053) & .814 (.316) & .515 (.078) & .854 (.160) & .040 \\
+        \rowcolor[HTML]{eff6ee}~ & \textbf{SNL} & .166 (.007) & .163 (.006) & .163 (.005) & .174 (.010) & .159 (.004) & .173 \\
+        \rowcolor[HTML]{eff6ee}~ & \textbf{MNL} & .981 (.002) & .541 (.179) & .934 (.150) & .677 (.123) & .932 (.016) & .182 \\
+        \rowcolor[HTML]{eff6ee}~ & \textbf{LNL} & .166 (.004) & .160 (.015) & .150 (.003) & .174 (.021) & .145 (.003) & .155 \\
+        \rowcolor[HTML]{eff6ee}\multirow{-6}{*}{\rotatebox[origin=c]{90}{\textbf{Single}}} & \textbf{XLNL} & .983 (.003) & .786 (.171) & .662 (.220) & .884 (.133) & .955 (.018) & .226 \\
+        \midrule\midrule
+        \rowcolor[HTML]{eff6ee}~ & \textbf{Medium} & .368 (.053) & .395 (.043) & .365 (.033) & .232 (.023) & .272 (.046) & \\
+        \rowcolor[HTML]{eff6ee}\multirow{-2}{*}{\rotatebox[origin=c]{90}{\textbf{Joint}}} & \textbf{Big} & .888 (.096) & .209 (.115) & .182 (.116) & .146 (.004) & .123 (.003) & \multirow{-2}{*}{.132} \\
+        \midrule
+        \rowcolor[HTML]{D79B00}
+        \multicolumn{8}{c}{\textit{Test-Set 2}}\\
+        \midrule
+        \rowcolor[HTML]{fff8e6}~ & \textbf{SL} & .007 (.002) & .006 (.003) & .006 (.001) & .009 (.001) & .005 (.001) & .004 \\
+        \rowcolor[HTML]{fff8e6}~ & \textbf{ML} & .984 (.002) & .937 (.040) & .843 (.278) & .714 (.063) & .902 (.116) & .024 \\
+        \rowcolor[HTML]{fff8e6}~ & \textbf{SNL} & .212 (.007) & .210 (.014) & .192 (.007) & .218 (.016) & .185 (.005) & .191 \\
+        \rowcolor[HTML]{fff8e6}~ & \textbf{MNL} & .982 (.002) & .653 (.140) & .947 (.111) & .793 (.081) & .957 (.010) & .207 \\
+        \rowcolor[HTML]{fff8e6}~ & \textbf{LNL} & .255 (.010) & .243 (.034) & .215 (.004) & .257 (.023) & .212 (.004) & .231 \\
+        \rowcolor[HTML]{fff8e6}\multirow{-6}{*}{\rotatebox[origin=c]{90}{\textbf{Single}}} & \textbf{XLNL} & .985 (.001) & .837 (.141) & .741 (.175) & .925 (.079) & .964 (.012) & .270 \\
+        \midrule\midrule
+        \rowcolor[HTML]{fff8e6}~ & \textbf{Medium} & .447 (.047) & .429 (.040) & .403 (.031) & .294 (.026) & .309 (.045) & \\
+        \rowcolor[HTML]{fff8e6}\multirow{-2}{*}{\rotatebox[origin=c]{90}{\textbf{Joint}}} & \textbf{Big} & .914 (.066) & .259 (.141) & .223 (.121) & .244 (.012) & .163 (.006) & \multirow{-2}{*}{.154} \\
+    \bottomrule
+    \end{tabular}
+    \caption{Mean nSHD (per graph, lower is better) for the \textbf{Single} and \textbf{Joint} settings, with the standard deviation over reruns in brackets. Graphs without edges are excluded, and three-variable samples of \textbf{Joint} are scored at their true size. For \textbf{Single}, the second column names the dataset; for \textbf{Joint}, it names the model size. All cells are based on 10 reruns, except for bGRU in \textbf{Joint} \emph{big}, where two reruns did not finish training (8 reruns). CM uses the corrected output head (\cref{cp:architectures}). CT is the correlation-thresholding reference.}
+\label{tab:cp:synthetic-nshd}
+\end{table*}

@@ -1,0 +1,21 @@
+\begin{table}[ht]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccc|c}
+    \toprule
+        ~ & \textbf{MLP} & \textbf{uGRU} & \textbf{bGRU} & \textbf{CM} & \textbf{Trf} & \textbf{All} \\
+    \midrule
+        \textit{3 variables} & \multicolumn{6}{c}{} \\
+        \quad $\Delta$nAUPRC (paired) & +.449 & +.803 & +.803 & +.698 & +.674 & +.685 \\
+        \quad Converged (\%) & 0\,$\to$\,66 & 6\,$\to$\,99 & 5\,$\to$\,100 & 37\,$\to$\,100 & 34\,$\to$\,100 & 16\,$\to$\,93 \\
+        \quad Best nAUPRC & .03\,$\to$\,.87 & .32\,$\to$\,.88 & .26\,$\to$\,.89 & .65\,$\to$\,.88 & .86\,$\to$\,.88 & .86\,$\to$\,.89 \\
+        \textit{5 variables} & \multicolumn{6}{c}{} \\
+        \quad $\Delta$nAUPRC (paired) & .000 & +.044 & +.039 & +.031 & +.019 & +.026 \\
+        \quad Converged (\%) & 0\,$\to$\,0 & 0\,$\to$\,12 & 0\,$\to$\,10 & 0\,$\to$\,7 & 0\,$\to$\,3 & 0\,$\to$\,6 \\
+        \quad Best nAUPRC & .01\,$\to$\,.01 & .01\,$\to$\,.48 & .01\,$\to$\,.55 & .01\,$\to$\,.42 & .01\,$\to$\,.16 & .01\,$\to$\,.57 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Effect of correlation injection in the \emph{Single} grid search, on \textit{Test-Set 2}, over the three three-variable (model size \emph{small}) and three five-variable datasets (\emph{medium}) and all other hyperparameters. nAUPRC is computed per graph and averaged; $\Delta$nAUPRC (paired) is the mean difference between configurations that differ only in the mechanism (on $-$ off). Converged is the share of configurations with an nAUPRC of at least 0.1, and Best nAUPRC the mean over datasets of the best configuration, each without $\to$ with the mechanism. Both passes of the grid use the same seed and are averaged. CM uses the corrected output head (\cref{cp:architectures}) and was run once.}
+    \label{tab:cp:ci:ts2}
+\end{table}

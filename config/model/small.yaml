@@ -35,6 +35,7 @@ convM_depth: 8
 #patch_size: 12
 convM_hidden_size1: 32
 conv1D: True
+convM_head_activation: False  # True: ReLU in the CM head (fixes linear readout, see model/conv.py)
 
 # mlp specifics
 mlp_max_ts_length: 96 # maximum ts length that is considered
